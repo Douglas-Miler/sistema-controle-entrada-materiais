@@ -36,10 +36,12 @@ public class CadastraProduto extends Application {
 	private GridPane gridPane;
 	private Stage stageOwner, primaryStage;
 	private CadastraProdutoController cadastraProdutoController;
+	private String codeBar;
 
-	public CadastraProduto(Stage stageOwner) {
+	public CadastraProduto(Stage stageOwner, String codeBar) {
 		this.stageOwner = stageOwner;
 		cadastraProdutoController = new CadastraProdutoController();
+		this.codeBar = codeBar;
 	}
 
 	@Override
@@ -51,6 +53,8 @@ public class CadastraProduto extends Application {
 
 		setPrimaryStageProperties(primaryStage, new Group(mainVBox));
 		this.primaryStage.show();
+
+		this.productNameField.requestFocus();
 	}
 
 	private void setPrimaryStageProperties(Stage primaryStage, Group group) {
@@ -92,10 +96,19 @@ public class CadastraProduto extends Application {
 					volumeField.getText(), unityField.getText());
 
 			if (operationResult) {
-				cadastraProdutoController.insertProductInDatabase();
 
-				new AlertUtil().createAlert(Alert.AlertType.INFORMATION, "Produto inserido com sucesso", ButtonType.OK,
-						"Atenção").showAndWait();
+				if (cadastraProdutoController.insertProductInDatabase()) {
+
+					new AlertUtil().createAlert(Alert.AlertType.INFORMATION, "Produto inserido com sucesso",
+							ButtonType.OK, "Atenção").showAndWait();
+
+					this.primaryStage.close();
+				} else {
+					new AlertUtil().createAlert(Alert.AlertType.INFORMATION,
+							"Houve um erro interno ao programa." + "\nContate o administrador do sistema",
+							ButtonType.OK, "Atenção").showAndWait();
+				}
+
 			} else
 				new AlertUtil().createAlert(Alert.AlertType.INFORMATION,
 						"Verifique se os campos com (*) estão preenchidos, pois são obrigatórios."
@@ -123,7 +136,7 @@ public class CadastraProduto extends Application {
 				if (result.get() == ButtonType.CANCEL) {
 					isClosable = false;
 				}
-				
+
 				break;
 			}
 		}
@@ -133,7 +146,7 @@ public class CadastraProduto extends Application {
 	}
 
 	private List<TextField> setFieldsProperties() {
-		codeBarField = new TextField();
+		codeBarField = new TextField(this.codeBar);
 		productNameField = new TextField();
 		labelField = new TextField();
 		descriptionField = new TextField();

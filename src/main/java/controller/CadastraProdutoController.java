@@ -22,10 +22,7 @@ public class CadastraProdutoController {
 		// CODIGO DE BARRAS
 		boolean result = baseController.inputNumberValidator(codeBar);
 		if (result)
-			if (codeBar.startsWith("0"))
-				this.produto.setCodigoBarras(codeBar.substring(1));
-			else
-				this.produto.setCodigoBarras(codeBar);
+			this.produto.setCodigoBarras(baseController.number);
 		else
 			return false;
 
@@ -37,56 +34,34 @@ public class CadastraProdutoController {
 			return false;
 
 		// MARCA DO PRODUTO
-		result = baseController.inputStringFieldHandler(productLabel);
-		if (result)
-			this.produto.setMarca(this.baseController.name);
-		else
-			return false;
+		productLabel = productLabel.trim();
+		if (!productLabel.isEmpty())
+			this.produto.setMarca(productLabel.replaceAll("\\s+", " "));
 
 		// DESCRICAO DO PRODUTO
-		if (!cleanSpaces(weight).isEmpty()) {
-			result = baseController.inputStringFieldHandler(description);
-			if (result)
-				this.produto.setDescricao(this.baseController.name);
-			else
-				return false;
-		}
+		description = description.trim();
+		if (!description.isEmpty())
+			this.produto.setDescricao(description.replaceAll("\\s+", " "));
 
 		// PESO DO PRODUTO
-		if (!cleanSpaces(weight).isEmpty()) {
-			result = baseController.inputNumberFloatingPointValidator(weight);
-			if (result)
-				this.produto.setPeso(Double.parseDouble(weight));
-			else
-				return false;
-		}
+		result = baseController.inputNumberFloatingPointValidator(weight);
+		if (result)
+			this.produto.setPeso(Double.parseDouble(baseController.number));
 
 		// VOLUME DO PRODUTO
-		if (!cleanSpaces(volume).isEmpty()) {
-			result = baseController.inputNumberFloatingPointValidator(volume);
-			if (result)
-				this.produto.setVolume(Double.parseDouble(volume));
-			else
-				return false;
-		}
-
+		result = baseController.inputNumberFloatingPointValidator(volume);
+		if (result)
+			this.produto.setVolume(Double.parseDouble(baseController.number));
+		
 		// UNIDADES POR PACOTE
-		if (!cleanSpaces(unity).isEmpty()) {
-			result = baseController.inputNumberValidator(unity);
-			if (result)
-				this.produto.setUnidadesPorPacote(Integer.parseInt(unity));
-			else
-				return false;
-		}
+		result = baseController.inputNumberValidator(unity);
+		if (result)
+			this.produto.setUnidadesPorPacote(Integer.parseInt(baseController.number));
 
 		return true;
 	}
 
-	private String cleanSpaces(String string) {
-		return string.trim().replaceAll("\\s+", " ");
-	}
-
-	public void insertProductInDatabase() {
-		produtoDao.createItem(this.produto);
+	public boolean insertProductInDatabase() {
+		return produtoDao.createItem(this.produto);
 	}
 }

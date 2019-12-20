@@ -12,7 +12,6 @@ import model.ItemTabela;
 
 public class CadastraEntregaController {
 
-	private String codeBar;
 	private ProdutoDao produtoDao;
 	private EntregaDao entregaDao;
 	private BaseController baseController;
@@ -24,20 +23,15 @@ public class CadastraEntregaController {
 	}
 
 	public boolean inputCodeBarValidator(String codeBar) {
-
-		boolean result = baseController.inputNumberValidator(codeBar);
-
-		if(result)
-			if(codeBar.startsWith("0"))
-				this.codeBar = codeBar.substring(1);
-			else
-				this.codeBar = codeBar;
-		
-		return result;
+		return baseController.inputNumberValidator(codeBar);
 	}
 
 	public ItemTabela searchItemInDataBase() {
-		return produtoDao.searchItem(this.codeBar);
+		return produtoDao.searchItem(this.getCodeBar());
+	}
+
+	public String getCodeBar() {
+		return this.baseController.number;
 	}
 
 	public void createDeliveryInDatabase(ObservableList<ItemTabela> listOfTableItems, ClienteDTO clienteDTO,

@@ -258,7 +258,10 @@ public class CadastraEntrega extends Application {
 
 					if (result.get() == ButtonType.OK) {
 						try {
-							new CadastraProduto(this.primaryStage).start(new Stage());
+							new CadastraProduto(this.primaryStage, cadastraEntregaController.getCodeBar())
+									.start(new Stage());
+
+							this.codeBarTextField.clear();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
