@@ -164,7 +164,7 @@ public class ProcuraCliente extends Application {
 			populateList(procuraClienteController.getSearchResult());
 		}
 	}
-	
+
 	private void setSearchNameContainerHBoxProperties() {
 
 		setSearchNameTextFieldProperties();

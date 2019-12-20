@@ -7,7 +7,6 @@ import model.ClienteDTO;
 
 public class ProcuraClienteController {
 
-	private String name;
 	private ClienteDao clienteDao;
 	private BaseController baseController;
 
@@ -15,19 +14,13 @@ public class ProcuraClienteController {
 		clienteDao = new ClienteDao();
 		baseController = new BaseController();
 	}
-	
-	public boolean inputStringFieldHandler(String name) {
 
-		boolean result = baseController.inputStringFieldHandler(name);
-		
-		if(result)
-			this.name = this.baseController.name;
-		
-		return result;
+	public boolean inputStringFieldHandler(String name) {
+		return baseController.inputStringFieldHandler(name);
 	}
 
 	public List<ClienteDTO> getSearchResult() {
-		return clienteDao.getSearchResult(this.name);
+		return clienteDao.getSearchResult(this.baseController.name);
 	}
 
 }
