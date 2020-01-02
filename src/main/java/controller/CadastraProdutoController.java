@@ -37,6 +37,8 @@ public class CadastraProdutoController {
 		productLabel = productLabel.trim();
 		if (!productLabel.isEmpty())
 			this.produto.setMarca(productLabel.replaceAll("\\s+", " "));
+		else
+			return false;
 
 		// DESCRICAO DO PRODUTO
 		description = description.trim();

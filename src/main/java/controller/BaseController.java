@@ -47,7 +47,7 @@ public class BaseController {
 
 	public boolean inputStringFieldHandler(String name) {
 
-		String nonWordsCharacters = "[^A-Za-z|ãÃêÊíÍôÔúÚçÇ\\s]";
+		String nonWordsCharacters = "[^A-Za-z|ãÃáÁéÉêÊíÍôÔúÚçÇ\\s]";
 		Pattern pattern = Pattern.compile(nonWordsCharacters);
 		name = name.trim();
 
