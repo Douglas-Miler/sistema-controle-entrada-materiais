@@ -1,0 +1,32 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<!-- unidade de persistencia com o nome financas -->
+	<persistence-unit name="sistema_controle_entregas">
+
+		<!-- Implementação do JPA, no nosso caso Hibernate -->
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+		<!-- Aqui são listadas todas as entidades -->
+		<class>main.java.model.Cliente</class>
+		<class>main.java.model.Entrega</class>
+		<class>main.java.model.Produto</class>
+
+		<properties>
+			<!-- Propriedades JDBC -->
+			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost;databaseName=sistema_controle_entregas;" />
+			<property name="javax.persistence.jdbc.user" value="sa" />
+			<property name="javax.persistence.jdbc.password" value="alunos@2019" />
+
+			<!-- Configurações específicas do Hibernate -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>

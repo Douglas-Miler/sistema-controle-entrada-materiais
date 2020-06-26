@@ -1,6 +1,5 @@
 .settings/
 lib/
-src/main/java/META-INF/
 target/
 .classpath
 .project
